@@ -21,6 +21,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Connect signals
         self.messageField.textChanged.connect(self.resizeField)
+        self.messageField.SendMessage.connect(self.sendMessage)
         self.sendButton.clicked.connect(self.sendMessage)
         self.chatroom.received.connect(self.displayMessage)
 
@@ -29,7 +30,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.worker_thread.start()
         self.chatroom.moveToThread(self.worker_thread)
 
-        self.chatroom.systemMessage("You are a maid!")
+#        self.chatroom.systemMessage("You are a maid!")
 
     def closeEvent(self, event:QtGui.QCloseEvent):
         if self.worker_thread:
@@ -62,6 +63,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if msg != '':
             self.displayMessage(msg, "user")
             self.chatroom.userMessage(msg)
+            self.messageField.setPlainText("")
 
 
     @QtCore.Slot(str, str)

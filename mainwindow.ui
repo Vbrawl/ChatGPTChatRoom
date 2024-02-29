@@ -98,7 +98,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPlainTextEdit" name="messageField">
+        <widget class="PlainMessageField" name="messageField">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
            <horstretch>0</horstretch>
@@ -184,6 +184,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlainMessageField</class>
+   <extends>QPlainTextEdit</extends>
+   <header>PlainMessageField</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
