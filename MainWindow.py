@@ -30,6 +30,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.actionReset.triggered.connect(self.chatroom.resetSession)
         self.actionReset.triggered.connect(self.clearMessageHistory)
         self.actionSetAPIToken.triggered.connect(self.setAPIToken)
+        self.actionSaveChatHistory.triggered.connect(self.saveChatHistory)
         self.APITokenUpdated.connect(self.chatroom.updateApiToken)
         self.APITokenUpdated.connect(self.clearMessageHistory)
         self.UserMessageSent.connect(self.chatroom.userMessage)
@@ -55,6 +56,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             return
 
         self.APITokenUpdated.emit(val)
+
+    @QtCore.Slot()
+    def saveChatHistory(self):
+        if self.messageList.count() > 0:
+            messages = []
+            for i in range(self.messageList.count()):
+                messages.append(self.messageList.item(i).text())
+
+            filename, filetype = QtWidgets.QFileDialog.getSaveFileName(self, "Save Chat History", "", "Text Files (*.txt)")
+            if filename == '' and filetype == '':
+                return
+
+            # If user actually selected a file:
+            with open(filename, 'w') as f:
+                f.write('\n'.join(messages))
 
     @QtCore.Slot()
     def clearMessageHistory(self):
