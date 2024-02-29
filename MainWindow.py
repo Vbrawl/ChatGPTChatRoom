@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from PySide6 import QtCore
 from PySide6 import QtWidgets
+from PySide6 import QtGui
 from chatroom import ChatRoom
 from ui_mainwindow import Ui_MainWindow
 from math import floor
@@ -16,12 +17,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.messageStepSize = 40
 
         # Setup chatroom
-        self.chatroom = ChatRoom("")#"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")
+        self.chatroom = ChatRoom("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")
 
         # Connect signals
         self.messageField.textChanged.connect(self.resizeField)
         self.sendButton.clicked.connect(self.sendMessage)
         self.chatroom.received.connect(self.displayMessage)
+
+        # Setup worker thread
+        self.worker_thread = QtCore.QThread()
+        self.worker_thread.start()
+        self.chatroom.moveToThread(self.worker_thread)
+
+        self.chatroom.systemMessage("You are a maid!")
+
+    def closeEvent(self, event:QtGui.QCloseEvent):
+        if self.worker_thread:
+            self.worker_thread.exit()
 
 
     @QtCore.Slot()
@@ -48,12 +60,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msg = self.messageField.toPlainText()
 
         if msg != '':
+            self.displayMessage(msg, "user")
             self.chatroom.userMessage(msg)
 
 
     @QtCore.Slot(str, str)
     def displayMessage(self, content:str, role:str):
-        print(f"{role}: {content}")
+        item = QtWidgets.QListWidgetItem(f"{role}: {content}")
+        self.messageList.addItem(item)
 
 
 if __name__ == "__main__":
