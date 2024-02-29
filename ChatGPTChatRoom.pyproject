@@ -2,6 +2,7 @@
     "files": [
         "LICENSE",
         "MainWindow.py",
+        "PlainMessageField.py",
         "chatroom.py",
         "mainwindow.ui",
         "requirements.txt"
