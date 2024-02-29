@@ -39,6 +39,10 @@ class ChatRoom(QObject):
     def resetSession(self):
         self.messages = []
 
+    @Slot(str)
+    def updateApiToken(self, apiToken):
+        self.client = OpenAI(api_key = apiToken)
+
 
 if __name__ == "__main__":
     from PySide6.QtCore import Slot
@@ -47,6 +51,6 @@ if __name__ == "__main__":
     def printReceived(content:str, role:str):
         print(f"{role}: {content}")
 
-    chatroom = ChatRoom("")#api_key="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")
+    chatroom = ChatRoom("")
     chatroom.received.connect(printReceived)
     chatroom.systemPrompt("You are a barman.")

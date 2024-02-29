@@ -7,6 +7,8 @@ from ui_mainwindow import Ui_MainWindow
 from math import floor
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    APITokenUpdated = QtCore.Signal(str)
+
     def __init__(self, parent:QtCore.QObject|None = None):
         super().__init__(parent)
         self.setupUi(self)
@@ -17,7 +19,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.messageStepSize = 40
 
         # Setup chatroom
-        self.chatroom = ChatRoom("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")
+        self.chatroom = ChatRoom("")
 
         # Connect signals
         self.messageField.textChanged.connect(self.resizeField)
@@ -26,17 +28,31 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.chatroom.received.connect(self.displayMessage)
         self.actionReset.triggered.connect(self.chatroom.resetSession)
         self.actionReset.triggered.connect(self.clearMessageHistory)
+        self.actionSetAPIToken.triggered.connect(self.setAPIToken)
+        self.APITokenUpdated.connect(self.chatroom.updateApiToken)
+        self.APITokenUpdated.connect(self.clearMessageHistory)
 
         # Setup worker thread
         self.worker_thread = QtCore.QThread()
         self.worker_thread.start()
         self.chatroom.moveToThread(self.worker_thread)
 
-#        self.chatroom.systemMessage("You are a maid!")
+        self.setAPIToken()
 
     def closeEvent(self, event:QtGui.QCloseEvent):
         if self.worker_thread:
             self.worker_thread.exit()
+
+    @QtCore.Slot()
+    def setAPIToken(self):
+        val, state = QtWidgets.QInputDialog.getText(self, "Set API Token", "API Token")
+        if not state: # user clicked cancel
+            return
+
+        if val == '':
+            return
+
+        self.APITokenUpdated.emit(val)
 
     @QtCore.Slot()
     def clearMessageHistory(self):
