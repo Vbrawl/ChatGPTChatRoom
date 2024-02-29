@@ -24,6 +24,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.messageField.SendMessage.connect(self.sendMessage)
         self.sendButton.clicked.connect(self.sendMessage)
         self.chatroom.received.connect(self.displayMessage)
+        self.actionReset.triggered.connect(self.chatroom.resetSession)
+        self.actionReset.triggered.connect(self.clearMessageHistory)
 
         # Setup worker thread
         self.worker_thread = QtCore.QThread()
@@ -36,6 +38,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.worker_thread:
             self.worker_thread.exit()
 
+    @QtCore.Slot()
+    def clearMessageHistory(self):
+        self.messageList.clear()
 
     @QtCore.Slot()
     def resizeField(self):

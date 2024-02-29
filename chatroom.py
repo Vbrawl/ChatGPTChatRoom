@@ -18,12 +18,10 @@ class ChatRoom(QObject):
     
     def systemMessage(self, content:str):
         self.messages.append({"role": "system", "content": content})
-#        self._sendAndReceive()
         self.sendMessages.emit()
 
     def userMessage(self, content:str):
         self.messages.append({"role": "user", "content": content})
-#        self._sendAndReceive()
         self.sendMessages.emit()
 
     @Slot()
@@ -36,6 +34,10 @@ class ChatRoom(QObject):
         choice = response.choices[0]
         self.messages.append({"role": choice.message.role, "content": choice.message.content})
         self.received.emit(choice.message.content, choice.message.role, response)
+
+    @Slot()
+    def resetSession(self):
+        self.messages = []
 
 
 if __name__ == "__main__":
