@@ -8,6 +8,7 @@ from math import floor
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     APITokenUpdated = QtCore.Signal(str)
+    UserMessageSent = QtCore.Signal(str)
 
     def __init__(self, parent:QtCore.QObject|None = None):
         super().__init__(parent)
@@ -31,6 +32,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.actionSetAPIToken.triggered.connect(self.setAPIToken)
         self.APITokenUpdated.connect(self.chatroom.updateApiToken)
         self.APITokenUpdated.connect(self.clearMessageHistory)
+        self.UserMessageSent.connect(self.chatroom.userMessage)
 
         # Setup worker thread
         self.worker_thread = QtCore.QThread()
@@ -83,7 +85,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         if msg != '':
             self.displayMessage(msg, "user")
-            self.chatroom.userMessage(msg)
+            self.UserMessageSent.emit(msg)
             self.messageField.setPlainText("")
 
 

@@ -5,7 +5,6 @@ from PySide6.QtCore import Signal, QObject, Slot
 
 
 class ChatRoom(QObject):
-    sendMessages = Signal()
     received = Signal(str, str, ChatCompletion) # content, role, response object
 
     def __init__(self, api_key:str, model:str = "gpt-3.5-turbo", parent:QObject|None = None):
@@ -14,15 +13,15 @@ class ChatRoom(QObject):
         self.messages = []
         self.model = model
 
-        self.sendMessages.connect(self._sendAndReceive)
-    
+    @Slot(str)
     def systemMessage(self, content:str):
         self.messages.append({"role": "system", "content": content})
-        self.sendMessages.emit()
+        self._sendAndReceive()
 
+    @Slot(str)
     def userMessage(self, content:str):
         self.messages.append({"role": "user", "content": content})
-        self.sendMessages.emit()
+        self._sendAndReceive()
 
     @Slot()
     def _sendAndReceive(self):
