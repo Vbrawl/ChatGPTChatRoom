@@ -13,9 +13,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Setup some constants
         self.messageAutoGrowPadding = 30
         self.messageMaximumStep = 2
+        self.messageStepSize = 40
 
         # Setup chatroom
-        self.chatroom = ChatRoom("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")
+        self.chatroom = ChatRoom("")#"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")
 
         # Connect signals
         self.messageField.textChanged.connect(self.resizeField)
@@ -40,9 +41,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 break # Stop iterating above the number of {self.messageMaximumStep}
 
         # Set stretch
-        spol = self.messageFrame.sizePolicy()
-        spol.setVerticalStretch(max(min(totalLines, self.messageMaximumStep), 0))
-        self.messageFrame.setSizePolicy(spol)
+        self.messageFrame.setMinimumHeight(self.messageStepSize * max(min(totalLines, self.messageMaximumStep), 1))
 
     @QtCore.Slot()
     def sendMessage(self):
