@@ -17,6 +17,10 @@ class ChatRoom(QObject):
         self.messages.append({"role": "system", "content": content})
         self._sendAndReceive()
 
+    def userMessage(self, content:str):
+        self.messages.append({"role": "user", "content": content})
+        self._sendAndReceive()
+
     def _sendAndReceive(self):
         response = self.client.chat.completions.create(
             model=self.model,

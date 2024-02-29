@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from PySide6 import QtCore
 from PySide6 import QtWidgets
+from chatroom import ChatRoom
 from ui_mainwindow import Ui_MainWindow
 from math import floor
 
@@ -13,8 +14,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.messageAutoGrowPadding = 30
         self.messageMaximumStep = 2
 
+        # Setup chatroom
+        self.chatroom = ChatRoom("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")
+
         # Connect signals
         self.messageField.textChanged.connect(self.resizeField)
+        self.sendButton.clicked.connect(self.sendMessage)
+        self.chatroom.received.connect(self.displayMessage)
 
 
     @QtCore.Slot()
@@ -37,6 +43,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         spol = self.messageFrame.sizePolicy()
         spol.setVerticalStretch(max(min(totalLines, self.messageMaximumStep), 0))
         self.messageFrame.setSizePolicy(spol)
+
+    @QtCore.Slot()
+    def sendMessage(self):
+        msg = self.messageField.toPlainText()
+
+        if msg != '':
+            self.chatroom.userMessage(msg)
+
+
+    @QtCore.Slot(str, str)
+    def displayMessage(self, content:str, role:str):
+        print(f"{role}: {content}")
 
 
 if __name__ == "__main__":
