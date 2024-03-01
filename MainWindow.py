@@ -5,6 +5,7 @@ from PySide6 import QtGui
 from chatroom import ChatRoom
 from ui_mainwindow import Ui_MainWindow
 from math import floor
+import webbrowser
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     APITokenUpdated = QtCore.Signal(str)
@@ -40,6 +41,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.APITokenUpdated.connect(self.chatroom.updateApiToken)
         self.APITokenUpdated.connect(self.clearMessageHistory)
         self.UserMessageSent.connect(self.chatroom.userMessage)
+
+        self.actionDeveloperProfile.triggered.connect(self.openBrowserToDeveloperProfile)
 
         # Setup worker thread
         self.worker_thread = QtCore.QThread()
@@ -115,6 +118,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def displayMessage(self, content:str, role:str):
         item = QtWidgets.QListWidgetItem(f"{role}: {content}")
         self.messageList.addItem(item)
+
+
+    @QtCore.Slot()
+    def openBrowserToDeveloperProfile(self):
+        # https://www.fiverr.com/vbrawl
+        webbrowser.open("https://www.fiverr.com/vbrawl")
 
 
 if __name__ == "__main__":
