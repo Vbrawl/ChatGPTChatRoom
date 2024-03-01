@@ -6,6 +6,7 @@ from chatroom import ChatRoom
 from ui_mainwindow import Ui_MainWindow
 from math import floor
 import webbrowser
+from commons import local_path
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     APITokenUpdated = QtCore.Signal(str)
@@ -16,7 +17,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         # Add Icon (Cannot be done in .ui since I will make the app into an exe later.)
-        self.setWindowIcon(QtGui.QIcon("logo.png"))
+        self.setWindowIcon(QtGui.QIcon(local_path("logo.png")))
 
         # Setup Credentials
         statusBar = self.statusBar()
