@@ -14,6 +14,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
 
+        # Setup Credentials
+        statusBar = self.statusBar()
+        statusCreditLabel = QtWidgets.QLabel(statusBar)
+        statusCreditLabel.setText("Credits: Vbrawl")
+        statusBar.addPermanentWidget(statusCreditLabel)
+
         # Setup some constants
         self.messageAutoGrowPadding = 30
         self.messageMaximumStep = 2
