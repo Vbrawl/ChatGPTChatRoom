@@ -15,6 +15,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
 
+        # Add Icon (Cannot be done in .ui since I will make the app into an exe later.)
+        self.setWindowIcon(QtGui.QIcon("logo.png"))
+
         # Setup Credentials
         statusBar = self.statusBar()
         statusCreditLabel = QtWidgets.QLabel(statusBar)

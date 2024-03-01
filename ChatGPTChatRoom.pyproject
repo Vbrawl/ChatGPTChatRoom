@@ -4,6 +4,7 @@
         "MainWindow.py",
         "PlainMessageField.py",
         "chatroom.py",
+        "logo.png",
         "mainwindow.ui",
         "requirements.txt"
     ]
