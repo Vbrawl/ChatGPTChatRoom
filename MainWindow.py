@@ -43,6 +43,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.UserMessageSent.connect(self.chatroom.userMessage)
 
         self.actionDeveloperProfile.triggered.connect(self.openBrowserToDeveloperProfile)
+        self.actionAbout.triggered.connect(self.showAboutBox)
 
         # Setup worker thread
         self.worker_thread = QtCore.QThread()
@@ -124,6 +125,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def openBrowserToDeveloperProfile(self):
         # https://www.fiverr.com/vbrawl
         webbrowser.open("https://www.fiverr.com/vbrawl")
+
+
+    @QtCore.Slot()
+    def showAboutBox(self):
+        QtWidgets.QMessageBox.about(self, "About ChatGPTChatRoom", "ChatGPTChatRoom is an open-source application that can be used to have exchange messages with Chat GPT 3.5 Turbo." \
+                                                                    + "\n\nTo use it you will an API key from OpenAI (https://platform.openai.com/api-keys).")
 
 
 if __name__ == "__main__":

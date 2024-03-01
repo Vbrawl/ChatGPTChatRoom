@@ -170,6 +170,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionDeveloperProfile"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
@@ -193,6 +194,16 @@
   <action name="actionDeveloperProfile">
    <property name="text">
     <string>Developer's Fiverr</string>
+   </property>
+  </action>
+  <action name="actionVersion">
+   <property name="text">
+    <string>Version</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
