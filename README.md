@@ -41,7 +41,7 @@
 
 ## How To Use
 
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest executable version of ChatGPTChatRoom if you are on Windows.
+You can [download](https://github.com/Vbrawl/ChatGPTChatRoom/releases/latest) the latest executable version of ChatGPTChatRoom if you are on Windows.
 
 Otherwise you can use the source code:
 
