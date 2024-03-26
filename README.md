@@ -65,6 +65,30 @@ $ pyside6-uic mainwindow.ui -o ui_mainwindow.py
 $ python MainWindow.py
 ```
 
+Or you can compile your own executable:
+
+```bash
+# Clone this repo and move to it
+$ git clone https://github.com/vbrawl/ChatGPTChatRoom
+$ cd ChatGPTChatRoom
+
+# Create a virtual environment (Optional but recommended)
+# I'm using miniconda3 so these are the command I use:
+$ conda create --name ChatGPTChatRoom python=3.12
+$ conda activate ChatGPTChatRoom
+
+# Install all dependencies of the app
+$ pip install -r requirements.txt
+
+# Build the executable
+$ cd build
+$ ./make-exe.bat
+
+# Run the executable
+$ cd dist
+$ ./ChatGPTChatRoom.exe
+```
+
 ## Support
 
 If you want to support us feel free send a donation:
